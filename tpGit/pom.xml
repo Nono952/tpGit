@@ -23,10 +23,51 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+             <groupId>org.sonatype.plugins</groupId>
+             <artifactId>nexus-staging-maven-plugin</artifactId>
+             <version>1.5.1</version>
+         </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+    <distributionManagement>
+         <snapshotRepository>
+             <id>nexus</id>
+             <url>http://localhost:8081/repository/maven-snapshots</url>
+         </snapshotRepository>
+     </distributionManagement>
+ 
+     <profiles>
+         <profile>
+             <id>release</id>
+             <build>
+                 <plugins>
+                     <plugin>
+                         <groupId>org.sonatype.plugins</groupId>
+                         <artifactId>nexus-staging-maven-plugin</artifactId>
+                         <version>1.5.1</version>
+                         <executions>
+                             <execution>
+                                 <id>default-deploy</id>
+                                 <phase>deploy</phase>
+                                 <goals>
+                                     <goal>deploy</goal>
+                                 </goals>
+                             </execution>
+                         </executions>
+                         <configuration>
+                             <serverId>nexus</serverId>
+                             <nexusUrl>http://localhost:8081/nexus/</nexusUrl>
+                             <skipStaging>true</skipStaging>
+                         </configuration>
+                     </plugin>
+                 </plugins>
+             </build>
+         </profile>
+     </profiles>
 </project>
