@@ -21,6 +21,7 @@ public class Console {
         logger.info("X vaut : " + X);
         
         for(int i=0; i<X; i++) {
+        	System.out.print("Valeur fib " + Fibonacci.fib(i))
             logger.info("Valeur fib " + Fibonacci.fib(i));
         }
     }
